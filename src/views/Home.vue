@@ -9,7 +9,7 @@
         </div>
         <div class="separator" />
         <div class="link">
-          <h1 class="name">{{ plans[0].title || '' }}</h1>
+          <h1 class="name">{{ active.name || '' }}</h1>
           <v-icon>navigate_next</v-icon>
         </div>
       </div>
@@ -22,7 +22,7 @@
             v-for="(d, idx) in shared"
             :key="d.id"
             :id="d.id.toString()"
-            :name="d.title"
+            :name="d.name"
             v-if="idx < 2"
             :class="idx%2==0 ? 'right' : 'left'"
           />
@@ -64,6 +64,8 @@ import Navbar from '@/components/navbar/Navbar.vue'
 import Card from '@/components/card/Card.vue'
 import { currentLoc } from "../mocks/config.js"
 
+const travelPlan = require("../mocks/travel-plan.json")
+
 export default {
   name: 'home',
   components: {
@@ -71,45 +73,34 @@ export default {
   },
   data () {
     return {
-      travel: [
-        {
-          id: 1,
-          name: 'Street Photography',
-          src: 'https://fokusjabar.co.id/wp-content/uploads/2019/01/20170617021322.jpg',
-          distance: '1.5 km',
-          status: false
-        },
-        {
-          id: 2,
-          name: 'Makan Enak',
-          src: 'https://fokusjabar.co.id/wp-content/uploads/2019/01/20170617021322.jpg',
-          distance: '1.5 km',
-          status: false
-        }
-      ],
       currActive: {
 
       },
       latitude: currentLoc.lat,
-      longitude: currentLoc.long
+      longitude: currentLoc.long,
+      shared: travelPlan.shared,
+      active: travelPlan.active,
+      places: travelPlan.places,
+      plans: []
     }
   },
-  computed: {
-    places() {
-      return this.$store.state.home.locationsCategory
-    },
-    plans () {
-      return this.$store.state.travelPlanStore.plans
-    },
-    shared () {
-      return this.$store.state.travelPlanStore.shared
-    }
-  },
+  // computed: {
+  //   places() {
+  //     // return this.$store.state.home.locationsCategory
+  //   },
+  //   plans () {
+  //     // return this.$store.state.travelPlanStore.plans
+  //   },
+  //   shared () {
+  //     // return this.$store.state.travelPlanStore.shared
+  //   }
+  // },
   mounted() {
-    this.$store.dispatch("travelPlanStore/getPlans")
-      .then(() => { console.log("OK") })
-    this.$store.dispatch("travelPlanStore/getShared")
-      .then(() => { console.log("OK") })
+    // this.$store.dispatch("travelPlanStore/getPlans")
+    //   .then(() => { console.log("OK") })
+    // this.$store.dispatch("travelPlanStore/getShared")
+    //   .then(() => { console.log("OK") })
+    console.log(this.shared)
   },
   methods: {
     getDistance(lat1, lon1, lat2, lon2, unit) {
@@ -135,7 +126,7 @@ export default {
     }
   },
   beforeMount() {
-    this.$store.dispatch("home/getLocationsByCategory", {}, { root: true })
+    // this.$store.dispatch("home/getLocationsByCategory", {}, { root: true })
   }
 }
 </script>

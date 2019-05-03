@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "staging": "indite-app",
+    "default": "indite-app"
+  }
+}

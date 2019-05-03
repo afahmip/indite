@@ -1,12 +1,11 @@
 import Vue from 'vue'
-import Router from 'vue-router'
+import VueRouter from 'vue-router'
 import Home from './views/Home.vue'
 import auth from './middlewares/auth'
 
-Vue.use(Router)
+Vue.use(VueRouter)
 
-const router = new Router({
-  mode: 'history',
+const router = new VueRouter({
   base: process.env.BASE_URL,
   routes: [
     {
@@ -80,6 +79,10 @@ const router = new Router({
       path: '/login',
       name: 'login',
       component: () => import('./views/Login.vue')
+    },
+    {
+      path: '*',
+      redirect: '/'
     }
   ]
 });
